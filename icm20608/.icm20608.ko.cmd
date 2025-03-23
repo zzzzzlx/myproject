@@ -1,0 +1,1 @@
+cmd_/home/zz/linux/实战/myproject/icm20608/icm20608.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/zz/linux/实战/myproject/icm20608/icm20608.ko /home/zz/linux/实战/myproject/icm20608/icm20608.o /home/zz/linux/实战/myproject/icm20608/icm20608.mod.o
