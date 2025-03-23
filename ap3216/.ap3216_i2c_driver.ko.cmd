@@ -1,0 +1,1 @@
+cmd_/home/zz/linux/实战/myproject/ap3216/ap3216_i2c_driver.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/zz/linux/实战/myproject/ap3216/ap3216_i2c_driver.ko /home/zz/linux/实战/myproject/ap3216/ap3216_i2c_driver.o /home/zz/linux/实战/myproject/ap3216/ap3216_i2c_driver.mod.o
