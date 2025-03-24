@@ -137,7 +137,6 @@ static int icm20608_read_raw(struct iio_dev *indio_dev,
         mutex_lock(&dev->lock);	
         ret = icm20608_read_channel_data(indio_dev, chan, val);
         mutex_unlock(&dev->lock);
-        return ret;
         break;
     case IIO_CHAN_INFO_SCALE:
         switch(chan->type){
@@ -166,6 +165,22 @@ static int icm20608_read_raw(struct iio_dev *indio_dev,
             ret = -EINVAL;
             break;
         }
+    case IIO_CHAN_INFO_CALIBBIAS:
+        switch(chan->type){
+        case IIO_ANGL_VEL:
+            mutex_lock(&dev->lock);
+            ret = icm20608_sensor_show(dev, ICM20_XG_OFFS_USRH, chan->channel2, val);
+		    mutex_unlock(&dev->lock);
+            break;
+        case IIO_ACCEL:			/* 加速度计的校准值 */
+			mutex_lock(&dev->lock);	
+			ret = icm20608_sensor_show(dev, ICM20_XA_OFFSET_H, chan->channel2, val);
+			mutex_unlock(&dev->lock);
+            break;
+        default:
+            ret = -EINVAL;
+            break;
+        }
         return ret;
     default:
         ret = -EINVAL;
@@ -174,18 +189,120 @@ static int icm20608_read_raw(struct iio_dev *indio_dev,
     return ret;
 }
 
+static int icm20608_set_sensor(struct icm20608_dev *dev, int reg, int axis, int val)
+{
+    int ret = 0;
+    int ind;
+    __be16 d = cpu_to_be16(val);
+
+    ind = (axis - IIO_MOD_X) * 2;
+    ret = regmap_bulk_write(dev->regmap, reg + ind, (u8*)&d, 2);
+    if (ret)
+		return -EINVAL;
+
+	return 0;
+}
+
+static int icm20608_accel_scale_set(struct icm20608_dev *dev, int val)
+{
+    int i, ret;
+    u8 d;
+    for (i = 0; i < ARRAY_SIZE(accel_scale_icm20608); ++i){
+        if (accel_scale_icm20608[i] == val){
+            d = (i << 3);
+            ret = regmap_write(dev->regmap, ICM20_ACCEL_CONFIG, d);
+            if(ret)
+                return ret;
+        }
+    }
+    return -EINVAL;
+}
+
+
+static int icm20608_gyro_scale_set(struct icm20608_dev *dev, int val)
+{
+    int i, ret;
+    u8 d;
+    for (i = 0; i < ARRAY_SIZE(gyro_scale_icm20608); ++i){
+        if (accel_scale_icm20608[i] == val){
+            d = (i << 3);
+            ret = regmap_write(dev->regmap, ICM20_GYRO_CONFIG, d);
+            if(ret)
+                return ret;
+        }
+    }
+    return -EINVAL;
+}
+
 static int icm20608_write_raw(struct iio_dev *indio_dev,
 			   struct iio_chan_spec const *chan,
 			   int val,
 			   int val2,
 			   long mask)
 {
-    return 0;
+    struct icm20608_dev *dev = iio_priv(indio_dev);
+    int ret;
+
+    switch (mask){
+    case IIO_CHAN_INFO_SCALE:
+        switch (chan->type){
+        case IIO_ACCEL:
+            mutex_lock(&dev->lock);
+            ret = icm20608_accel_scale_set(dev, val2);
+            mutex_unlock(&dev->lock);
+            break;
+        case IIO_ANGL_VEL:
+            mutex_lock(&dev->lock);
+            ret = icm20608_gyro_scale_set(dev, val2);
+            mutex_unlock(&dev->lock);
+            break;
+        default:
+            ret = -EINVAL;  
+            break;
+        }
+    case IIO_CHAN_INFO_CALIBBIAS:
+        switch (chan->type){
+        case IIO_ACCEL:
+            mutex_lock(&dev->lock);
+            ret = icm20608_set_sensor(dev, ICM20_XA_OFFSET_H, chan->channel2, val);
+            mutex_unlock(&dev->lock);
+            break;
+        case IIO_ANGL_VEL:
+            mutex_lock(&dev->lock);
+			ret = icm20608_set_sensor(dev, ICM20_XG_OFFS_USRH, chan->channel2, val);
+			mutex_unlock(&dev->lock);
+        default:
+            ret = -EINVAL;
+            break;
+        }
+    default:
+        ret = -EINVAL;
+        break;
+    }
+    return ret;
+}
+
+static int icm20608_write_raw_get_fmt(struct iio_dev *indio_dev,
+				 struct iio_chan_spec const *chan, long mask)
+{
+	switch (mask) {
+	case IIO_CHAN_INFO_SCALE:
+		switch (chan->type) {
+		case IIO_ANGL_VEL:		/* 用户空间写的陀螺仪分辨率数据要乘以1000000 */
+			return IIO_VAL_INT_PLUS_MICRO;
+		default:				/* 用户空间写的加速度计分辨率数据要乘以1000000000 */
+			return IIO_VAL_INT_PLUS_NANO;
+		}
+	default:
+		return IIO_VAL_INT_PLUS_MICRO;
+	}
+	return -EINVAL;
 }
 
 static const struct iio_info icm20608_info = {
 	.read_raw = &icm20608_read_raw,
 	.write_raw = &icm20608_write_raw,
+    .write_raw_get_fmt = &icm20608_write_raw_get_fmt,
 	.driver_module = THIS_MODULE,
 };
 
