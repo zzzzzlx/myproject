@@ -1,0 +1,1 @@
+cmd_/home/zz/linux/实战/myproject/gt9147/gt9147.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/zz/linux/实战/myproject/gt9147/gt9147.ko /home/zz/linux/实战/myproject/gt9147/gt9147.o /home/zz/linux/实战/myproject/gt9147/gt9147.mod.o
