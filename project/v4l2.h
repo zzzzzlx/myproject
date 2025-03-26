@@ -2,24 +2,50 @@
 #ifndef V4L2_H
 #define V4L2_H
 
-#include <string>
+#include <QWidget>
+#include <QImage>
+#include <QThread>
+#include <linux/videodev2.h>
 
-class v4l2 {
+class v4l2 : public QThread{
+    Q_OBJECT
 public:
-    explicit v4l2();
+    explicit v4l2(const QString& device, QObject* parent = nullptr);
     ~v4l2();
 
-    int v4l2_open();
-    int v4l2_close();
+    bool v4l2Init();
+    void v4l2_enum_formats();
+    void v4l2_print_formats();
+    bool setFormat();
+    bool initBuffers();
+    bool startCapturing();
+    void run();
 
+    int video_height = 600;
+    int video_width = 1024;
+
+
+signals:
+    void errorOccurred(const QString& error);
+    void frameReady(const QImage& image);
 private:
-    int video_widht = 600;
-    int video_height = 1024;
+    struct BufferInfo {
+        unsigned char* start;
+        size_t length;
+    };
 
-    char *userbuff[4];
-    char userbuff_length[4];
+    QString m_device;
+    int video_fd = -1;
+    bool m_running = true;
 
-    int video_fd;
+    BufferInfo m_buffers[4];
+
+    QImage processFrame(const BufferInfo& buffer);
+    void stop();
+
+
+
+
 };
 
 #endif // V4L2_H
