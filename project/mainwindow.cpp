@@ -6,7 +6,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    printf("MainWindow constructor start \n");
 
     m_camera = new v4l2("/dev/video1", this);
     connect(m_camera, &v4l2::frameReady, this, &MainWindow::displayFrame);

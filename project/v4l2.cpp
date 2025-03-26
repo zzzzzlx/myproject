@@ -108,7 +108,6 @@ bool v4l2::setFormat(){
         printf("fail 1\n");
         return false;
     }
-    printf("setFormat \n");
 }
 
 bool v4l2::initBuffers()
