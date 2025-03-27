@@ -128,7 +128,6 @@ static int gt9147_read_firmware(struct i2c_client *client, struct gt9147_dev *de
     dev->max_x = (data[2] << 8) | data[1];
     dev->max_y = (data[4] << 8) | data[3];
     dev->irqtype = data[6] & 0x3;
-    printk("X_MAX: %d, Y_MAX: %d, TRIGGER: 0x%02x\r\n", dev->max_x, dev->max_y, dev->irqtype);
 
     return 0;
 }

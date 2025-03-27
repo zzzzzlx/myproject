@@ -17,15 +17,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp  \
-    v4l2.cpp
+    mainwindow.cpp \
+    v4l2/camerashow.cpp \
+    v4l2/v4l2.cpp
 
 HEADERS += \
-    mainwindow.h    \
-    v4l2.h
+    mainwindow.h \
+    v4l2/camerashow.h \
+    v4l2/v4l2.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    v4l2/camerashow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

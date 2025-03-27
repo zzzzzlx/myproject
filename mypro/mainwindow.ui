@@ -14,23 +14,17 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="videoLabel">
+   <widget class="QPushButton" name="push_camera">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>-30</y>
-      <width>1024</width>
-      <height>600</height>
+      <x>900</x>
+      <y>0</y>
+      <width>120</width>
+      <height>120</height>
      </rect>
     </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;TextLabel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>camare</string>
     </property>
    </widget>
   </widget>
