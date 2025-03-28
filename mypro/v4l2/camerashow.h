@@ -18,9 +18,6 @@ public:
     explicit camerashow(QWidget *parent = nullptr);
     ~camerashow();
 
-signals:
-    void CameraStop(bool status);
-
 public slots:
     void displayFrame(const QImage &frame);
 
@@ -28,9 +25,8 @@ private slots:
     void on_pushButton_back_clicked();
 
 private:
-    QTimer *timer;
     Ui::camerashow *ui;
-    v4l2 *m_camera = nullptr;
+    v4l2 *m_camera;
 };
 
 #endif // CAMERASHOW_H

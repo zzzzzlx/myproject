@@ -14,7 +14,7 @@ public:
     explicit v4l2(const QString& device, QObject* parent = nullptr);
     ~v4l2();
 
-
+    void cameraStop();
 
     int video_height = 600;
     int video_width = 1024;
@@ -25,7 +25,6 @@ signals:
 
 
 public slots:
-    void camerastop(bool status);
     void readFrame();
 
 private:
@@ -38,22 +37,18 @@ private:
     int video_fd = -1;
     bool m_running = true;
 
+
     BufferInfo m_buffers[4];
 
     bool OpenCamera();
     bool setFormat();
     bool initBuffers();
     bool startCapturing();
+    void cameraClean();
     void run();
 
 
-
-
     QImage processFrame(const BufferInfo& buffer);
-
-
-
-
 
 };
 

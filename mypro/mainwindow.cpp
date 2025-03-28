@@ -19,8 +19,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_push_camera_clicked()
 {
-    qDebug() << "Button clicked!";
-    this->close();
     camerashow *CameraShow = new camerashow();
     CameraShow->show();
+    this->hide();
 }

@@ -17,7 +17,11 @@ v4l2::v4l2(const QString& device, QObject* parent)
 
 v4l2::~v4l2()
 {
-
+    cameraStop();
+    if(isRunning()){
+        quit();
+        wait();
+    }
 }
 
 bool v4l2::OpenCamera()
@@ -42,7 +46,7 @@ bool v4l2::OpenCamera()
 }
 
 bool v4l2::setFormat(){
-    struct v4l2_format format = {};
+    struct v4l2_format format = {0};
     format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     format.fmt.pix.height = video_height;
     format.fmt.pix.width = video_width;
@@ -57,7 +61,7 @@ bool v4l2::setFormat(){
 
 bool v4l2::initBuffers()
 {
-    struct v4l2_requestbuffers requestbuffers{};
+    struct v4l2_requestbuffers requestbuffers = {0};
     requestbuffers.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     requestbuffers.count = 4;
     requestbuffers.memory = V4L2_MEMORY_MMAP;
@@ -66,7 +70,7 @@ bool v4l2::initBuffers()
         return false;
     }
 
-    for(int i = 0; i < requestbuffers.count; i++){
+    for(int i = 0; i < 4; i++){
         struct v4l2_buffer buffer{};
         buffer.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
         buffer.index = i;
@@ -97,7 +101,7 @@ bool v4l2::initBuffers()
 
 bool v4l2::startCapturing()
 {
-    v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if(ioctl(video_fd, VIDIOC_STREAMON, &type)){
         printf("fail 6\n");
         return false;
@@ -116,14 +120,18 @@ void v4l2::run()
     setFormat();
     initBuffers();
     startCapturing();
-
     m_running = true;
+
+    while(m_running){
+        readFrame();
+        msleep(30);
+    }
+
+    cameraClean();
 }
 
 void v4l2::readFrame()
 {
-    if (!m_running) return;
-
     fd_set fds;
     FD_ZERO(&fds);
     FD_SET(video_fd, &fds);
@@ -131,7 +139,7 @@ void v4l2::readFrame()
 
     if (select(video_fd + 1, &fds, NULL, NULL, &tv) <= 0) return;
 
-    v4l2_buffer buf = {};
+    v4l2_buffer buf = {0};
     buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     buf.memory = V4L2_MEMORY_MMAP;
 
@@ -139,22 +147,18 @@ void v4l2::readFrame()
 
 
     QImage image(m_buffers[buf.index].start, video_width, video_height, QImage::Format_RGB16);
-    emit frameReady(image);
+    emit frameReady(image.copy());
 
     ioctl(video_fd, VIDIOC_QBUF, &buf);
 }
 
-void v4l2::camerastop(bool status)
+void v4l2::cameraClean()
 {
-    if(status == false)
-    {
-        m_running = false;
-
         enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
         if (video_fd >= 0) {
             ioctl(video_fd, VIDIOC_STREAMOFF, &type);
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; i++) {
                 if (m_buffers[i].start) {
                     munmap(m_buffers[i].start, m_buffers[i].length);
                     m_buffers[i].start = nullptr;
@@ -163,5 +167,9 @@ void v4l2::camerastop(bool status)
             ::close(video_fd);
             video_fd = -1;
         }
-    }
+}
+
+void v4l2::cameraStop()
+{
+    m_running = false;
 }

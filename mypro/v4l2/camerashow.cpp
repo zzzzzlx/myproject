@@ -7,20 +7,17 @@ camerashow::camerashow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    timer = new QTimer(this);
-
     m_camera = new v4l2("/dev/video1", this);
-    connect(m_camera, &v4l2::frameReady, this, &camerashow::displayFrame);
-    connect(timer, &QTimer::timeout, m_camera, &v4l2::readFrame);
-    connect(this, &camerashow::CameraStop, m_camera, &v4l2::camerastop);
 
+    connect(m_camera, &v4l2::frameReady, this, &camerashow::displayFrame);
     m_camera->start();
-    timer->start(30);
 
 }
 
 camerashow::~camerashow()
 {
+    m_camera->cameraStop();
+    m_camera->wait();
     delete ui;
 }
 
@@ -34,9 +31,9 @@ void camerashow::displayFrame(const QImage &image)
 
 void camerashow::on_pushButton_back_clicked()
 {
-    timer->stop();          // 停止定时器
-    emit CameraStop(false);
-    this->close();
+    m_camera->cameraStop();
+
     MainWindow *s = new MainWindow();
     s->show();
+    this->close();
 }

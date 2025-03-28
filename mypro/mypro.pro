@@ -1,3 +1,19 @@
+# 指定目标可执行文件输出目录
+DESTDIR = $$PWD/
+
+# 定义中间文件存放目录
+BUILD_DIR = build
+
+# 将各类中间文件路径指向同一目录
+OBJECTS_DIR = $$BUILD_DIR
+MOC_DIR = $$BUILD_DIR
+RCC_DIR = $$BUILD_DIR
+UI_DIR = $$BUILD_DIR
+
+# 自动创建目录
+!exists($$BUILD_DIR): mkdir($$BUILD_DIR)
+!exists($$DESTDIR): mkdir($$DESTDIR)
+
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
