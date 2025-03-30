@@ -18,8 +18,12 @@ public:
     explicit camerashow(QWidget *parent = nullptr);
     ~camerashow();
 
+signals:
+    void frameReturn(int index);
+    void StopSign();
+
 public slots:
-    void displayFrame(const QImage &frame);
+    void displayFrame(const QImage &frame, int index);
 
 private slots:
     void on_pushButton_back_clicked();

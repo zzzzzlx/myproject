@@ -82,6 +82,7 @@ bool v4l2::initBuffers()
             }
 
         m_buffers[i].length = buffer.length;
+        m_buffers[i].in_use = false;
         m_buffers[i].start = static_cast<unsigned char*>(
                     mmap(NULL, buffer.length, PROT_READ | PROT_WRITE, MAP_SHARED, video_fd, buffer.m.offset));
 
@@ -126,8 +127,6 @@ void v4l2::run()
         readFrame();
         msleep(30);
     }
-
-    cameraClean();
 }
 
 void v4l2::readFrame()
@@ -145,12 +144,16 @@ void v4l2::readFrame()
 
     if (ioctl(video_fd, VIDIOC_DQBUF, &buf) < 0) return;
 
+    if(m_buffers[buf.index].in_use){
+        if(ioctl(video_fd, VIDIOC_QBUF, &buf));
+    }
 
     QImage image(m_buffers[buf.index].start, video_width, video_height, QImage::Format_RGB16);
-    emit frameReady(image.copy());
+    m_buffers[buf.index].in_use = true;
 
-    ioctl(video_fd, VIDIOC_QBUF, &buf);
+    emit frameReady(image, buf.index);
 }
+
 
 void v4l2::cameraClean()
 {
@@ -172,4 +175,16 @@ void v4l2::cameraClean()
 void v4l2::cameraStop()
 {
     m_running = false;
+}
+
+
+
+void v4l2::frameStatus(int index)
+{
+    v4l2_buffer buf = {0};
+    buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    buf.memory = V4L2_MEMORY_MMAP;
+
+    m_buffers[index].in_use = false;
+    ioctl(video_fd, VIDIOC_QBUF, &buf);
 }

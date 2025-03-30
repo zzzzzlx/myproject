@@ -6,7 +6,7 @@
 #include <QImage>
 #include <QThread>
 #include <linux/videodev2.h>
-#include <QTimer>
+#include <QMutex>
 
 class v4l2 : public QThread{
     Q_OBJECT
@@ -21,22 +21,26 @@ public:
 
 
 signals:
-    void frameReady(const QImage& image);
-
+    void frameReady(const QImage& image,int index);
 
 public slots:
-    void readFrame();
+    void frameStatus(int index);
+    void cameraClean();
+
 
 private:
     struct BufferInfo {
         unsigned char* start;
         size_t length;
+        bool in_use;
     };
+
 
     QString m_device;
     int video_fd = -1;
-    bool m_running = true;
 
+    QMutex m_mutex;
+    bool m_running = true;
 
     BufferInfo m_buffers[4];
 
@@ -44,7 +48,8 @@ private:
     bool setFormat();
     bool initBuffers();
     bool startCapturing();
-    void cameraClean();
+
+    void readFrame();
     void run();
 
 
