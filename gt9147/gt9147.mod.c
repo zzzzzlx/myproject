@@ -21,7 +21,7 @@ __attribute__((section("__versions"))) = {
 	{ 0xab5c8cb5, __VMLINUX_SYMBOL_STR(i2c_del_driver) },
 	{ 0x19bdcb34, __VMLINUX_SYMBOL_STR(i2c_register_driver) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
-	{ 0x59175f83, __VMLINUX_SYMBOL_STR(dev_err) },
+	{ 0x63961a83, __VMLINUX_SYMBOL_STR(dev_err) },
 	{ 0x2770f6b8, __VMLINUX_SYMBOL_STR(devm_request_threaded_irq) },
 	{ 0xe3c07ed7, __VMLINUX_SYMBOL_STR(input_register_device) },
 	{ 0xb7cfa4a8, __VMLINUX_SYMBOL_STR(gpiod_direction_input) },

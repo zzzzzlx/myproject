@@ -18,8 +18,9 @@ camerashow::camerashow(QWidget *parent) :
 
 camerashow::~camerashow()
 {
-    m_camera->cameraStop();
-    m_camera->wait();
+    disconnect(this, &camerashow::StopSign, m_camera, &v4l2::cameraClean);
+    delete m_camera;
+    m_camera = nullptr;
     delete ui;
 }
 
@@ -38,12 +39,13 @@ void camerashow::displayFrame(const QImage &image, int index)
 
 void camerashow::on_pushButton_back_clicked()
 {
+    disconnect(this, &camerashow::frameReturn, m_camera, &v4l2::frameStatus);
+
     m_camera->cameraStop();
-    wait();
-    emit StopSign();
-
-
     MainWindow *s = new MainWindow();
     s->show();
+    s->setAttribute(Qt::WA_DeleteOnClose); // 窗口关闭时自动删除
+    emit StopSign();
     this->close();
+
 }

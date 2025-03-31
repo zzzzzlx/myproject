@@ -20,6 +20,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_push_camera_clicked()
 {
     camerashow *CameraShow = new camerashow();
+    CameraShow->setAttribute(Qt::WA_DeleteOnClose);
     CameraShow->show();
-    this->hide();
+    this->close();
 }

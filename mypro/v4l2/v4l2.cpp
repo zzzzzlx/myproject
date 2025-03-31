@@ -166,6 +166,7 @@ void v4l2::cameraClean()
                     munmap(m_buffers[i].start, m_buffers[i].length);
                     m_buffers[i].start = nullptr;
                 }
+                m_buffers[i].in_use = false;
             }
             ::close(video_fd);
             video_fd = -1;
