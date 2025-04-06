@@ -70,6 +70,7 @@ void asr::readyReadData()
 
         QString temp = getJsonValue(data, key);
 
+
         qDebug()<<temp<<endl;
     }
 }
