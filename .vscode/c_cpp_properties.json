@@ -4,9 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/zz/zlx_linux/include", 
-                "/home/zz/zlx_linux/arch/arm/include", 
-                "/home/zz/zlx_linux/arch/arm/include/generated/"
+                "/home/zz/linux/linux-imx-rel_imx_4.1.15_2.1.0_ga/include", 
+                "/home/zz/linux/linux-imx-rel_imx_4.1.15_2.1.0_ga/arch/arm/include", 
+                "/home/zz/linux/linux-imx-rel_imx_4.1.15_2.1.0_ga/arch/arm/include/generated/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

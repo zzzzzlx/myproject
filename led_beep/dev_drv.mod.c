@@ -22,20 +22,20 @@ __attribute__((section("__versions"))) = {
 	{ 0x495be299, __VMLINUX_SYMBOL_STR(class_destroy) },
 	{ 0x51204841, __VMLINUX_SYMBOL_STR(platform_driver_unregister) },
 	{ 0xda113ac9, __VMLINUX_SYMBOL_STR(__platform_driver_register) },
-	{ 0x3c8c7d13, __VMLINUX_SYMBOL_STR(__class_create) },
 	{ 0x34fbc3de, __VMLINUX_SYMBOL_STR(__register_chrdev) },
 	{ 0x67c2fa54, __VMLINUX_SYMBOL_STR(__copy_to_user) },
 	{ 0x15711cf, __VMLINUX_SYMBOL_STR(gpiod_get_value) },
 	{ 0xfbc74f64, __VMLINUX_SYMBOL_STR(__copy_from_user) },
 	{ 0x807a81b0, __VMLINUX_SYMBOL_STR(gpiod_set_value) },
 	{ 0xfa2a45e, __VMLINUX_SYMBOL_STR(__memzero) },
-	{ 0x17d73699, __VMLINUX_SYMBOL_STR(device_create) },
+	{ 0xd245d5c6, __VMLINUX_SYMBOL_STR(device_create) },
+	{ 0x3c8c7d13, __VMLINUX_SYMBOL_STR(__class_create) },
 	{ 0xc61ff1f2, __VMLINUX_SYMBOL_STR(gpiod_direction_output_raw) },
 	{ 0x3089e8ae, __VMLINUX_SYMBOL_STR(gpio_to_desc) },
 	{ 0xa849f518, __VMLINUX_SYMBOL_STR(__gpiod_get) },
 	{ 0xe914e41e, __VMLINUX_SYMBOL_STR(strcpy) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
-	{ 0xe6e17706, __VMLINUX_SYMBOL_STR(device_destroy) },
+	{ 0xc7a1f54a, __VMLINUX_SYMBOL_STR(device_destroy) },
 	{ 0x6e2b69fa, __VMLINUX_SYMBOL_STR(gpiod_put) },
 	{ 0x4f79cbcc, __VMLINUX_SYMBOL_STR(desc_to_gpio) },
 	{ 0xe2d5255a, __VMLINUX_SYMBOL_STR(strcmp) },
@@ -49,4 +49,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "079E370BE0695E8993D049C");
+MODULE_INFO(srcversion, "F8FAE1086EE70E6E08CEE25");

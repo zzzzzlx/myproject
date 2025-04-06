@@ -17,5 +17,9 @@
         "**/*.su":true, 
         "**/*.cmd":true,
         "Documentation":true, 
+    },
+    "files.associations": {
+        "leds.h": "c",
+        "platform_device.h": "c"
     }
 }

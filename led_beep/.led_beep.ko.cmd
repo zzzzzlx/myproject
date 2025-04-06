@@ -1,0 +1,1 @@
+cmd_/home/zz/linux/project/myproject/led_beep/led_beep.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/zz/linux/project/myproject/led_beep/led_beep.ko /home/zz/linux/project/myproject/led_beep/led_beep.o /home/zz/linux/project/myproject/led_beep/led_beep.mod.o

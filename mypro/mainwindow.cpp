@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    myasr = new asr(this);
     ui->setupUi(this);
 }
 
@@ -23,4 +24,55 @@ void MainWindow::on_push_camera_clicked()
     CameraShow->setAttribute(Qt::WA_DeleteOnClose);
     CameraShow->show();
     this->close();
+}
+
+void MainWindow::on_pushButton_led_clicked()
+{
+    myled = new led(this);
+    if(Ledstatus == false)
+    {
+        Ledstatus = true;
+        myled->setLedState(Ledstatus);
+        ui->pushButton_led->setText("led off");
+    }else{
+        Ledstatus = false;
+        myled->setLedState(Ledstatus);
+        ui->pushButton_led->setText("led on");
+    }
+}
+
+void MainWindow::on_pushButton_beep_clicked()
+{
+    mybeep = new beep(this);
+    if(Beepstatus == false)
+    {
+        Beepstatus = true;
+        mybeep->setLedState(Beepstatus);
+        ui->pushButton_beep->setText("beep off");
+    }else{
+        Beepstatus = false;
+        mybeep->setLedState(Beepstatus);
+        ui->pushButton_beep->setText("beep on");
+    }
+}
+
+void MainWindow::on_pushButton_audio_clicked()
+{
+    myAudio = new Audio(this);
+    if(Audiostatus == false){
+        Audiostatus = true;
+        myAudio->startRecorder();
+        ui->pushButton_audio->setText("audio off");
+    }else{
+        Audiostatus = false;
+        myAudio->stopRecorder();
+        ui->pushButton_audio->setText("audio on");
+    }
+}
+
+void MainWindow::on_pushButton_test_clicked()
+{
+
+    QString fileName = QCoreApplication::applicationDirPath() + "/16k.wav";
+    myasr->getTheResult(fileName);
 }

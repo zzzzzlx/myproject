@@ -1,1 +1,1 @@
-cmd_/home/zz/linux/实战/myproject/led_beep/dev_drv.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/zz/linux/实战/myproject/led_beep/dev_drv.ko /home/zz/linux/实战/myproject/led_beep/dev_drv.o /home/zz/linux/实战/myproject/led_beep/dev_drv.mod.o
+cmd_/home/zz/linux/project/myproject/led_beep/dev_drv.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/zz/linux/project/myproject/led_beep/dev_drv.ko /home/zz/linux/project/myproject/led_beep/dev_drv.o /home/zz/linux/project/myproject/led_beep/dev_drv.mod.o

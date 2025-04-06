@@ -16,7 +16,8 @@ UI_DIR = $$BUILD_DIR
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia network
 
 CONFIG += c++11
 
@@ -32,12 +33,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ars/asr.cpp \
+    ars/audio.cpp \
+    gpio/beep.cpp \
+    gpio/led.cpp \
     main.cpp \
     mainwindow.cpp \
     v4l2/camerashow.cpp \
     v4l2/v4l2.cpp
 
 HEADERS += \
+    ars/asr.h \
+    ars/audio.h \
+    gpio/beep.h \
+    gpio/led.h \
     mainwindow.h \
     v4l2/camerashow.h \
     v4l2/v4l2.h

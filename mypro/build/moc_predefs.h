@@ -58,10 +58,10 @@
 #define __SA_FBIT__ 15
 #define __SHRT_MAX__ 32767
 #define __LDBL_MAX__ 1.7976931348623157e+308L
+#define __ARM_FEATURE_IDIV 1
 #define __FRACT_MAX__ 0X7FFFP-15R
-#define __thumb2__ 1
 #define __UFRACT_FBIT__ 16
-#define __ARM_FP 12
+#define __ARM_FP 14
 #define __UFRACT_MIN__ 0.0UR
 #define __UINT_LEAST8_MAX__ 255
 #define __GCC_ATOMIC_BOOL_LOCK_FREE 2
@@ -94,7 +94,7 @@
 #define __LDBL_HAS_INFINITY__ 1
 #define __LFRACT_MIN__ (-0.5LR-0.5LR)
 #define __HA_IBIT__ 8
-#define __ARM_NEON_FP 4
+#define __ARM_NEON_FP 6
 #define __TQ_IBIT__ 0
 #define __FLT_EPSILON__ 1.1920928955078125e-7F
 #define __APCS_32__ 1
@@ -116,6 +116,7 @@
 #define __LFRACT_EPSILON__ 0x1P-31LR
 #define __ULFRACT_MIN__ 0.0ULR
 #define __gnu_linux__ 1
+#define _LARGEFILE_SOURCE 1
 #define __has_include_next(STR) __has_include_next__(STR)
 #define __ARM_PCS_VFP 1
 #define __LDBL_HAS_QUIET_NAN__ 1
@@ -175,6 +176,8 @@
 #define __cpp_lambdas 200907
 #define __ARM_FEATURE_QBIT 1
 #define __INT_FAST64_TYPE__ long long int
+#define __FP_FAST_FMAF 1
+#define __FP_FAST_FMAL 1
 #define __DBL_MIN__ double(2.2250738585072014e-308L)
 #define __FLT_MIN_10_EXP__ (-37)
 #define __LACCUM_MIN__ (-0X1P31LK-0X1P31LK)
@@ -201,6 +204,7 @@
 #define _STDC_PREDEF_H 1
 #define __UDA_FBIT__ 32
 #define __LLACCUM_EPSILON__ 0x1P-31LLK
+#define __ARM_FEATURE_FMA 1
 #define __GCC_ATOMIC_INT_LOCK_FREE 2
 #define __FLOAT_WORD_ORDER__ __ORDER_LITTLE_ENDIAN__
 #define __USFRACT_MIN__ 0.0UHR
@@ -223,7 +227,6 @@
 #define __UINT64_MAX__ 18446744073709551615ULL
 #define __UDQ_FBIT__ 64
 #define __INT8_TYPE__ signed char
-#define __thumb__ 1
 #define __ELF__ 1
 #define __ULFRACT_EPSILON__ 0x1P-32ULR
 #define __LLFRACT_FBIT__ 63
@@ -286,7 +289,6 @@
 #define __UINT16_TYPE__ short unsigned int
 #define __WCHAR_TYPE__ unsigned int
 #define __SIZEOF_FLOAT__ 4
-#define __THUMBEL__ 1
 #define __USQ_FBIT__ 32
 #define __UINTPTR_MAX__ 4294967295U
 #define __DEC64_MIN_EXP__ (-382)
@@ -326,6 +328,7 @@
 #define __UINT64_TYPE__ long long unsigned int
 #define __ARM_NEON 1
 #define __LLFRACT_MAX__ 0X7FFFFFFFFFFFFFFFP-63LLR
+#define _LARGEFILE64_SOURCE 1
 #define __TQ_FBIT__ 127
 #define __INT_FAST8_TYPE__ signed char
 #define __ULLACCUM_EPSILON__ 0x1P-32ULLK
@@ -334,6 +337,7 @@
 #define __DBL_DECIMAL_DIG__ 17
 #define __DEC_EVAL_METHOD__ 2
 #define __TA_FBIT__ 63
+#define _FILE_OFFSET_BITS 64
 #define __UDQ_IBIT__ 0
 #define __ORDER_BIG_ENDIAN__ 4321
 #define __ACCUM_EPSILON__ 0x1P-15K
@@ -347,6 +351,7 @@
 #define __UINT_FAST32_TYPE__ unsigned int
 #define __CHAR32_TYPE__ unsigned int
 #define __FLT_MAX__ 3.4028234663852886e+38F
+#define __FP_FAST_FMA 1
 #define __cpp_constexpr 200704
 #define __USACCUM_FBIT__ 8
 #define __INT32_TYPE__ int
@@ -368,6 +373,7 @@
 #define __ATOMIC_SEQ_CST 5
 #define __DA_FBIT__ 31
 #define __UINT32_TYPE__ unsigned int
+#define __ARM_ARCH_EXT_IDIV__ 1
 #define __UINTPTR_TYPE__ unsigned int
 #define __USA_IBIT__ 16
 #define __DEC64_SUBNORMAL_MIN__ 0.000000000000001E-383DD
