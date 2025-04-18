@@ -5,7 +5,7 @@
 #include <QDir>
 #include <QCoreApplication>
 
-Audio::Audio(QObject *parent)
+Audio::Audio(QObject *parent) : QObject(parent)
 {
     /* 录制音频的类 */
     m_audioRecorder = new QAudioRecorder(this);
@@ -19,7 +19,7 @@ Audio::Audio(QObject *parent)
     devicesVar.append(QVariant(QString()));
     for (auto &device: m_audioRecorder->audioInputs()) {
         devicesVar.append(QVariant(device));
-        //qDebug()<<"本地声卡设备："<<device<<endl;
+       // qDebug()<<"本地声卡设备："<<device<<endl;
     }
 
     /* 音频编码 */
@@ -33,7 +33,7 @@ Audio::Audio(QObject *parent)
     containersVar.append(QVariant(QString()));
     for (auto &containerName: m_audioRecorder->supportedContainers()) {
         containersVar.append(QVariant(containerName));
-        //qDebug()<<"支持的格式："<<containerName<<endl;
+       //qDebug()<<"支持的格式："<<containerName<<endl;
     }
 
     /* 采样率 */
@@ -65,8 +65,17 @@ Audio::Audio(QObject *parent)
     bitratesVar.append(QVariant(96000));
     bitratesVar.append(QVariant(128000));
 
-    m_audioRecorder->setAudioInput(devicesVar.at(0).toString());
 
+}
+
+
+Audio::~Audio()
+{
+
+}
+
+void Audio::startRecorder()
+{
     /* 下面的是录音设置 */
     QAudioEncoderSettings settings;
     settings.setCodec(codecsVar.at(0).toString());
@@ -81,7 +90,6 @@ Audio::Audio(QObject *parent)
 
     /* I.MX6ULL第20个支持的格式为 audio/x-wav */
     QString container = containersVar.at(20).toString();
-
     /* 使用配置 */
     m_audioRecorder->setEncodingSettings(settings,
                                          QVideoEncoderSettings(),
@@ -89,16 +97,8 @@ Audio::Audio(QObject *parent)
     /* 录音保存为16k.wav文件 */
     m_audioRecorder->setOutputLocation(QUrl::fromLocalFile(tr("./16k.wav")));
 
-}
+    m_audioRecorder->setAudioInput(devicesVar.at(0).toString());
 
-
-Audio::~Audio()
-{
-
-}
-
-void Audio::startRecorder()
-{
         /* 开始录音 */
     m_audioRecorder->record();
 }

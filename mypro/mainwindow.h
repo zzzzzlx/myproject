@@ -9,6 +9,7 @@
 #include "gpio/beep.h"
 #include "ars/audio.h"
 #include "ars/asr.h"
+#include "usart/usart.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -49,9 +50,7 @@ private:
 
     asr *myasr = nullptr;
 
-
-
-
+    usart *myUsart = nullptr;
 
 };
 #endif // MAINWINDOW_H

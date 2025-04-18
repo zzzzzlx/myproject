@@ -7,13 +7,18 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    myasr = new asr(this);
+
     ui->setupUi(this);
+
+    /*myAudio = new Audio(this);*/
+    myUsart = new usart(this);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete  myAudio;
+    myAudio = nullptr;
 }
 
 
@@ -58,21 +63,21 @@ void MainWindow::on_pushButton_beep_clicked()
 
 void MainWindow::on_pushButton_audio_clicked()
 {
-    myAudio = new Audio(this);
     if(Audiostatus == false){
         Audiostatus = true;
-        myAudio->startRecorder();
+       myAudio->startRecorder();
         ui->pushButton_audio->setText("audio off");
     }else{
         Audiostatus = false;
         myAudio->stopRecorder();
         ui->pushButton_audio->setText("audio on");
+
     }
 }
 
 void MainWindow::on_pushButton_test_clicked()
 {
-
+    myasr = new asr(this);
     QString fileName = QCoreApplication::applicationDirPath() + "/16k.wav";
     myasr->getTheResult(fileName);
 }

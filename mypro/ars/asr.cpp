@@ -2,7 +2,7 @@
 #include <QCoreApplication>
 
 
-asr::asr(QObject *parent)
+asr::asr(QObject *parent) : QObject(parent)
 {
     networkAccessManger = new QNetworkAccessManager(this);
 

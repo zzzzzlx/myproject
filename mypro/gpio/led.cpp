@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 
-led::led(QObject *parent)
+led::led(QObject *parent) : QObject(parent)
 {
     this->setParent(parent);
     file.setFileName("/sys/class/leds/led/brightness");

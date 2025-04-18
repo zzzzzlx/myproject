@@ -17,7 +17,7 @@ UI_DIR = $$BUILD_DIR
 QT       += core gui
 
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia network
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia network serialport
 
 CONFIG += c++11
 
@@ -39,6 +39,8 @@ SOURCES += \
     gpio/led.cpp \
     main.cpp \
     mainwindow.cpp \
+    usart/gps.cpp \
+    usart/usart.cpp \
     v4l2/camerashow.cpp \
     v4l2/v4l2.cpp
 
@@ -48,6 +50,8 @@ HEADERS += \
     gpio/beep.h \
     gpio/led.h \
     mainwindow.h \
+    usart/gps.h \
+    usart/usart.h \
     v4l2/camerashow.h \
     v4l2/v4l2.h
 

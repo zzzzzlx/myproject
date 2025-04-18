@@ -4,7 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 
-beep::beep(QObject *parent)
+beep::beep(QObject *parent) : QObject(parent)
 {
     this->setParent(parent);
     file.setFileName("/sys/class/leds/beep/brightness");
